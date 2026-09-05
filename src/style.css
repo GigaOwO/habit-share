@@ -1,0 +1,219 @@
+:root {
+  /* 色は3色まで：背景・文字・アクセント。エラー色だけは意味を伝えるための例外 */
+  --bg: #f7f5f1;
+  --text: #262322;
+  --accent: #3f6b4f;
+  --accent-rgb: 63, 107, 79; /* --accent と同じ色。rgba()で薄く使うための別表現 */
+  --error: #c0392b;
+
+  color-scheme: light;
+  font: 16px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 2px solid var(--text);
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+header h1 {
+  font-size: 20px;
+  margin: 0;
+}
+
+#today-date {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+h2 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+
+section {
+  margin-bottom: 24px;
+}
+
+/* 今日のタスク */
+#today-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#today-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(38, 35, 34, 0.15);
+}
+
+#today-list label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+#today-list input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+/* 完了は打ち消し線＋薄く、未完了は通常表示にして一目で区別できるようにする */
+#today-list li:has(input:checked) label {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* 今週の達成の丸。F-06実装時に #week-dots の中へ
+   .dot（未来）／.dot--done（完了）／.dot--pending（未完了）を付ける想定 */
+#week-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px dashed rgba(38, 35, 34, 0.25);
+  background: transparent;
+}
+
+.dot--pending {
+  border-style: solid;
+  border-color: rgba(38, 35, 34, 0.3);
+}
+
+.dot--done {
+  border-style: solid;
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+/* みんなの今日 */
+#friends-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#friends-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 8px;
+  border-bottom: 1px solid rgba(38, 35, 34, 0.1);
+}
+
+/* 自分の行だけ、アクセント色の帯と太字で他と見分けられるようにする */
+#friends-list .me {
+  font-weight: 700;
+  border-left: 3px solid var(--accent);
+  background: rgba(var(--accent-rgb), 0.08);
+}
+
+/* 習慣を追加フォーム */
+#add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#title-input {
+  padding: 8px;
+  border: 1px solid rgba(38, 35, 34, 0.3);
+  border-radius: 4px;
+  font: inherit;
+  width: 100%;
+}
+
+#day-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+#day-checks label {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 14px;
+}
+
+#add-form button {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  background: var(--accent);
+  color: var(--bg);
+  font: inherit;
+  cursor: pointer;
+}
+
+#add-form button:focus-visible,
+#today-list input:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+/* エラー表示：目立たせる必要があるので3色ルールの例外として赤系を使う */
+#error-message {
+  color: var(--error);
+  font-size: 14px;
+}
+
+#error-message:empty {
+  display: none;
+}
+
+#routine-list {
+  list-style: none;
+  padding: 8px 0 0;
+  margin: 0;
+}
+
+#routine-list li {
+  padding: 4px 0;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+@media (max-width: 480px) {
+  #app {
+    padding: 12px;
+  }
+
+  header h1 {
+    font-size: 18px;
+  }
+
+  #day-checks {
+    gap: 6px 10px;
+  }
+}
